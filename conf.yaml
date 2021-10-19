@@ -1,0 +1,99 @@
+experiment: audio-caption-alignment
+
+output_path: "replace with your output path"
+
+# Ray-tune configurations
+ray_conf:
+  init_args:
+    num_cpus: 1
+    num_gpus: 1
+    local_mode: False
+    ignore_reinit_error: True
+    _temp_dir: "replace with your tmp path"
+
+  search_space: { }
+  search_alg: Null
+  trial_scheduler: Null
+
+  trial_stopper: TrialPlateauStopper
+  stopper_args:
+    metric: loss (val)  # loss ({split})
+    std: 0.01
+    num_results: 10
+    grace_period: 60
+    metric_threshold: Null
+    mode: min
+
+  reporter: CLIReporter
+
+
+# Data configurations
+data_conf:
+  input_path: "replace with your AudioGrounding directory (e.g., ~/AudioGrounding)"
+
+  dataset: AudioGrounding
+  data_splits:
+    train: train_caption_pairs.json
+    val: val_caption_pairs.json
+    test: test_caption_pairs.json
+  text_tokens: caption_tokens
+  audio_features: audio_logmel.hdf5
+  word_embeddings: word2vec_emb.pkl
+  vocabulary: vocab_info.pkl
+
+
+# Training configurations
+training:
+  model: CRNNWordModel
+  algorithm:
+    epochs: 100
+    batch_size: 32
+    criterion: TripletRankingLoss_STSQ
+    optimizer: AdamOptimizer
+
+
+# Model hyper-parameters
+CRNNWordModel:
+  name: CRNNWordModel
+  args:
+    proj_dim: 300
+    audio_encoder:
+      input_dim: 64
+    text_encoder:
+      pretrained: True
+      trainable: False
+
+
+# Algorithm hyper-parameters
+
+# Losses
+TripletRankingLoss_STSQ:
+  name: TripletRankingLoss
+  args:
+    margin: 1.0
+    reduction: STSQ
+
+TripletRankingLoss_MQST:
+  name: TripletRankingLoss
+  args:
+    margin: 1.0
+    reduction: MQST
+
+TripletRankingLoss_MTSQ:
+  name: TripletRankingLoss
+  args:
+    margin: 1.0
+    reduction: MTSQ
+
+
+# Optimizers
+AdamOptimizer:
+  name: Adam
+  args:
+    lr: 0.001
+    weight_decay: 0.0
+  scheduler_args:
+    mode: min
+    factor: 0.1
+    patience: 5
+    threshold: 0.001

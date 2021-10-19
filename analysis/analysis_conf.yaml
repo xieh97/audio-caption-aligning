@@ -1,0 +1,71 @@
+output_path: "replace with your output path"
+
+experiment: audio-caption-alignment
+
+trial: "replace with the Ray-tune trial directory"
+checkpoint: "replace with the best checkpoint directory"
+
+model: CRNNWordModel
+criterion: TripletRankingLoss_STSQ
+
+
+# Data
+audio_caption:
+  input_path: "replace with your AudioGrounding directory (e.g., ~/AudioGrounding)"
+
+  dataset: AudioGrounding
+  data_splits:
+    train: train_caption_pairs.json
+    val: val_caption_pairs.json
+    test: test_caption_pairs.json
+  text_tokens: caption_tokens
+  audio_features: audio_logmel.hdf5
+  word_embeddings: word2vec_emb.pkl
+  vocabulary: vocab_info.pkl
+
+audio_phrase:
+  input_path: "replace with your AudioGrounding directory (e.g., ~/AudioGrounding)"
+
+  dataset: AudioGrounding
+  data_splits:
+    train: train_phrase_pairs.json
+    val: val_phrase_pairs.json
+    test: test_phrase_pairs.json
+  text_tokens: phrase_tokens
+  audio_features: audio_logmel.hdf5
+  word_embeddings: word2vec_emb.pkl
+  vocabulary: vocab_info.pkl
+
+
+# Model hyper-parameters
+CRNNWordModel:
+  name: CRNNWordModel
+  args:
+    proj_dim: 300
+    audio_encoder:
+      input_dim: 64
+    text_encoder:
+      pretrained: True
+      trainable: False
+
+
+# Algorithm hyper-parameters
+
+# Losses
+TripletRankingLoss_STSQ:
+  name: TripletRankingLoss
+  args:
+    margin: 1.0
+    reduction: STSQ
+
+TripletRankingLoss_MQST:
+  name: TripletRankingLoss
+  args:
+    margin: 1.0
+    reduction: MQST
+
+TripletRankingLoss_MTSQ:
+  name: TripletRankingLoss
+  args:
+    margin: 1.0
+    reduction: MTSQ
