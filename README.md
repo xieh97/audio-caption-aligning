@@ -1,15 +1,15 @@
 ## ICASSP 2022 - Unsupervised Audio-Caption Aligning Learns Correspondences between Individual Sound Events and Textual Phrases
 
-This repository provides the source code for our paper "[Unsupervised Audio-Caption Aligning Learns Correspondences between Individual Sound Events and Textual Phrases](https://arxiv.org/abs/2110.02939)".
+This repository provides source code for [our paper](https://arxiv.org/abs/2110.02939):
 
 ```
 @InProceedings{Xie2022Unsupervised,
-    author={Xie, Huang and Räsänen, Okko and Drossos, Konstantinos and Virtanen, Tuomas},
-    booktitle={ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
-    title={Unsupervised Audio-Caption Aligning Learns Correspondences Between Individual Sound Events and Textual Phrases},
-    year={2022},
-    pages={8867-8871},
-    doi={10.1109/ICASSP43922.2022.9747336}
+    author = {Xie, Huang and Räsänen, Okko and Drossos, Konstantinos and Virtanen, Tuomas},
+    title = {Unsupervised Audio-Caption Aligning Learns Correspondences Between Individual Sound Events and Textual Phrases},
+    booktitle = {ICASSP 2022 - 2022 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)},
+    year = {2022},
+    pages = {8867-8871},
+    doi = {10.1109/ICASSP43922.2022.9747336}
 }
 ```
 
